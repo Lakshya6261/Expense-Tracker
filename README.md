@@ -30,19 +30,19 @@ This Expense Tracker is ideal for:
 
 ## 📝 File Breakdown
 
-### `/public/index.html`
+### `/index.html`
 This is the main frontend file where the expense input form and dashboard are displayed.
 
-### `/public/css/app.css`
+### `/app.css`
 The stylesheet for the frontend to make the expense tracker responsive and visually appealing.
 
-### `/public/js/app.js`
+### `/app.js`
 JavaScript to handle frontend interactions, including submitting expenses via the form and dynamically displaying them on the dashboard.
 
 ### `/server.js`
 The server file where the Express.js application is created, and middleware and routes are set up.
 
-### `/models/expense.js`
+### `/expense.js`
 Mongoose schema for storing expense data in MongoDB, including fields like name, amount, and category.
 
 ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)
