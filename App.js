@@ -12,26 +12,31 @@ document.body.appendChild(totalDisplay);
 
 let totalExpenses = 0;
 
-addExpenseButton.addEventListener('click', () => {
+addExpenseButton.addEventListener('click', async () => {
     const name = expenseName.value.trim();
     const amount = parseFloat(expenseAmount.value);
     const category = expenseCategory.value;
 
     if (name && !isNaN(amount) && amount > 0) {
-        // Add expense to the list
-        const listItem = document.createElement('li');
-        listItem.className = 'expense-item';
-        listItem.innerHTML = `
-            <span>${name} (${category})</span>
-            <span>$${amount.toFixed(2)}</span>
-        `;
-        expenseList.appendChild(listItem);
+        const res = await fetch('http://localhost:3000/add-expense', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, amount, category })
+        });
 
-    
-        totalExpenses += amount;
-        totalDisplay.textContent = `Total Expenses: $${totalExpenses.toFixed(2)}`;
+        const data = await res.json();
+        if (res.ok) {
+            const listItem = document.createElement('li');
+            listItem.className = 'expense-item';
+            listItem.innerHTML = `<span>${name} (${category})</span><span>$${amount.toFixed(2)}</span>`;
+            expenseList.appendChild(listItem);
 
-        
+            totalExpenses += amount;
+            totalDisplay.textContent = `Total Expenses: $${totalExpenses.toFixed(2)}`;
+        } else {
+            alert(data.error || 'Failed to add expense');
+        }
+
         expenseName.value = '';
         expenseAmount.value = '';
     } else {
